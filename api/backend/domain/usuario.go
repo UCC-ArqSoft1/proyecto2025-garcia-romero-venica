@@ -8,6 +8,5 @@ type Usuario struct {
 	Usuario      string `json:"usuario"`
 	Contraseña   string `json:"contraseña"`
 	Telefono     int    `json:"telefono"`
-	Ficha_Medica bool   `json:"ficha_medica"`
-	Tipo_Usuario string `json:"tipo_usuario"`
+	Tipo_Usuario int    `json:"tipo_usuario"`
 }
