@@ -1,6 +1,7 @@
 package domain
 
 type TipoUsuario struct {
-	ID     int    `json:"id"`
-	Nombre string `json:"nombre"`
+	ID     int    `gorm:"primaryKey"`
+	Nombre string `gorm:"type:varchar(45);not null"`
 }
+type TipoUSuarios [] TipoUsuario
