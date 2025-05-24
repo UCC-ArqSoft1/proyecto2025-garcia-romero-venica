@@ -1,11 +1,10 @@
-// DashboardSocio.js
 import React, { useState } from "react";
 import './DashboardSocio.css';
 
 const actividadesFake = [
-  { id: 1, titulo: "Fútbol", horario: "18:00", profesor: "Carlos Pérez", descripcion: "Partido amistoso de fútbol 5" },
-  { id: 2, titulo: "Yoga", horario: "09:00", profesor: "Laura Gómez", descripcion: "Clase de yoga para principiantes" },
-  { id: 3, titulo: "Crossfit", horario: "20:00", profesor: "Martín Díaz", descripcion: "Entrenamiento de alta intensidad" },
+  { id: 1, titulo: "Fútbol", horario: "18:00 a 20:00", profesor: "Profesor: Carlos Pérez", descripcion: "Partido amistoso de fútbol 5" },
+  { id: 2, titulo: "Yoga", horario: "09:00 a 11:00", profesor: "Profesor: Laura Gómez", descripcion: "Clase de yoga para principiantes" },
+  { id: 3, titulo: "Crossfit", horario: "20:00 a 22:00", profesor: "Profesor: Martín Díaz", descripcion: "Entrenamiento de alta intensidad" },
 ];
 
 function DashboardSocio() {
@@ -23,26 +22,26 @@ function DashboardSocio() {
   };
 
   return (
-    <main className="container">
-      <h1 className="titulo">Actividades Disponibles</h1>
+    <main className="socio-container">
+      <h1 className="socio-titulo">Actividades Disponibles</h1>
 
       <input
         type="text"
         placeholder="Buscar por título, horario o profesor"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="input"
+        className="socio-input"
       />
 
-      <ul className="lista">
+      <ul className="socio-lista">
         {actividadesFiltradas.length === 0 && <li>No se encontraron actividades</li>}
         {actividadesFiltradas.map((act) => (
-          <li key={act.id} className="itemLista">
+          <li key={act.id} className="socio-itemLista">
             <div>
-              <strong>{act.titulo}</strong> - {act.horario} - {act.profesor}<br/>
+              <strong>{act.titulo}</strong> - {act.horario} - {act.profesor}<br />
               <span>{act.descripcion}</span>
             </div>
-            <button onClick={() => handleInscribirse(act)} className="btn">Inscribirse</button>
+            <button onClick={() => handleInscribirse(act)} className="socio-btn">Inscribirse</button>
           </li>
         ))}
       </ul>
@@ -51,3 +50,4 @@ function DashboardSocio() {
 }
 
 export default DashboardSocio;
+
