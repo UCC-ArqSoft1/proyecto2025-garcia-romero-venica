@@ -1,60 +1,64 @@
-.container {
-  max-width: 700px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #1f1f1f;
-  border-radius: 10px;
-  color: #f0f0f0;
+/* REVISADO */
+
+.socio-container {
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #1f2235;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.titulo {
+.socio-titulo {
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #ffffff;
 }
 
-.input {
+.socio-input {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin-bottom: 24px;
-  border-radius: 6px;
-  border: none;
+  border-radius: 8px;
+  border: 1px solid #444;
   font-size: 1rem;
-  background-color: #2a2a2a;
+  background-color: #2a2d3e;
   color: #eee;
 }
 
-.lista {
-  list-style: none;
-  padding: 0;
+.socio-input:focus {
+  outline: none;
+  background-color: #353a4f;
 }
 
-.itemLista {
-  background-color: #2a2a2a;
-  margin-bottom: 16px;
-  padding: 16px 20px;
-  border-radius: 6px;
+.socio-itemLista {
+  background-color: #2a2d3e;
+  padding: 18px 22px;
+  border-radius: 10px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
   flex-wrap: wrap;
-  color: #ddd;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
-.btn {
-  margin-top: 10px;
-  padding: 10px 20px;
+.socio-itemLista strong {
+  font-size: 1.1rem;
+}
+
+.socio-btn {
+  margin-top: 12px;
+  padding: 12px 24px;
   background-color: #44bd32;
   border: none;
-  border-radius: 6px;
-  color: white;
-  font-weight: 700;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.btn:hover {
-  background-color: #2ecc71;
+.socio-btn:hover {
+  background-color: #3da429;
 }
