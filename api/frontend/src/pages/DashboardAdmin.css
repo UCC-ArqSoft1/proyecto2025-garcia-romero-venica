@@ -1,88 +1,95 @@
-.container {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #1f1f1f;
-  border-radius: 10px;
-  color: #f0f0f0;
-  font-family: Arial, Helvetica, sans-serif;
+/* REVISADO */
+
+.admin-container {
+  max-width: 720px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #1f2235;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
-.titulo {
-  text-align: center;
+.admin-titulo {
+  font-size: 2rem;
   margin-bottom: 20px;
 }
 
-.formSection {
-  margin-bottom: 40px;
+.admin-subtitulo {
+  margin-bottom: 24px;
+  font-size: 1.3rem;
 }
 
-.form {
+.admin-formSection {
+  margin-bottom: 20px;
+}
+
+.admin-form {
   display: flex;
   flex-direction: column;
+  gap: 15px;
 }
 
-.input,
-.textarea {
-  padding: 12px 10px;
-  margin-bottom: 20px;
-  border-radius: 6px;
-  border: none;
-  font-size: 1rem;
-  background-color: #2a2a2a;
+.admin-input,
+.admin-textarea {
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #2a2d3e;
   color: #eee;
+  font-size: 1rem;
 }
 
-.textarea {
-  resize: vertical;
+.admin-input:focus,
+.admin-textarea:focus {
+  outline: none;
+  background-color: #353a4f;
 }
 
-.btn {
-  padding: 14px 0;
-  background-color: #e03a3a;
+.admin-textarea {
+  min-height: 100px;
+}
+
+.admin-btn {
+  padding: 12px 24px;
+  background-color: green;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   color: white;
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.btn:hover {
-  background-color: #b32e2e;
+.admin-btn:hover {
+  background-color: darkgreen;
 }
 
-.lista {
-  list-style: none;
-  padding: 0;
-}
-
-.itemLista {
-  background-color: #2a2a2a;
-  margin-bottom: 10px;
-  padding: 14px 18px;
-  border-radius: 6px;
+.admin-itemLista {
+  background-color: #2a2d3e;
+  padding: 18px 22px;
+  border-radius: 10px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
   color: #ddd;
 }
 
-.btnEdit {
+.admin-btnEdit,
+.admin-btnDelete {
   background-color: transparent;
   border: none;
-  color: #f5a623;
-  font-weight: 700;
+  font-weight: bold;
   cursor: pointer;
-  margin-right: 10px;
+  font-size: 1rem;
+  margin-left: 10px;
 }
 
-.btnDelete {
-  background-color: transparent;
-  border: none;
+.admin-btnEdit {
+  color: #f5a623;
+}
+
+.admin-btnDelete {
   color: #e03a3a;
-  font-weight: 700;
-  cursor: pointer;
 }
