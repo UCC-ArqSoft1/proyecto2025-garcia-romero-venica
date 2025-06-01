@@ -1,0 +1,64 @@
+/* REVISADO */
+
+.socio-container {
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #1f2235;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.socio-titulo {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.socio-input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  font-size: 1rem;
+  background-color: #2a2d3e;
+  color: #eee;
+}
+
+.socio-input:focus {
+  outline: none;
+  background-color: #353a4f;
+}
+
+.socio-itemLista {
+  background-color: #2a2d3e;
+  padding: 18px 22px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.socio-itemLista strong {
+  font-size: 1.1rem;
+}
+
+.socio-btn {
+  margin-top: 12px;
+  padding: 12px 24px;
+  background-color: #44bd32;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.socio-btn:hover {
+  background-color: #3da429;
+}
