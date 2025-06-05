@@ -1,0 +1,12 @@
+package dto
+
+
+type UsuarioDto struct {
+	ID 			int 	`json:id`
+	Nombre 		string 	`json:nombre`
+	Email 		string 	`json:email`
+	Password 	string 	`json:password`
+	TipoUsuario strin	`json:tipo_usuario_id`
+
+}
+type UsuariosDto [] UsuarioDto
