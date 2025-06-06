@@ -1,45 +1,52 @@
 package db
-import (
-	actividadClient 	"proyecto2025-garcia-romero-venica/clients/actividad"
-	usuarioClient   	"proyecto2025-garcia-romero-venica/clients/usuario"
-	inscripcionClient	"proyecto2025-garcia-romero-venica/clients/inscripcion"
-	"proyecto2025-garcia-romer-venica/api/backend/domain"
-	"gorm.io/gorm/logger"
-	"gorm.io/gorm"
-	"gorm.io/driver/sqlite" // Sqlite driver based on CGO
-	log "github.com/sirupsen/logrus"
 
+import (
+	"log"
+
+	actividadClient "proyecto2025-garcia-romero-venica/clients/actividad"
+	usuarioClient "proyecto2025-garcia-romero-venica/clients/usuario"
+	inscripcionClient "proyecto2025-garcia-romero-venica/clients/inscripcion"
+
+	actividadService "proyecto2025-garcia-romero-venica/api/backend/services/actividad_service"
+	usuarioController "proyecto2025-garcia-romero-venica/api/backend/controllers/usuario"
+
+	"proyecto2025-garcia-romero-venica/api/backend/domain"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
-var(
+var (
 	dba *gorm.DB
 	err error
-
 )
-func init(){
-	dba, err=gorm.Open(mysql.Open("file::memory?cache=shared"), &gorm.config{
-		Logger: logger.Default.LogMode (logger.Info),
 
+func init() {
+	dsn := "root:1234@tcp(127.0.0.1:3306)/gimnasio?parseTime=true"
+	dba, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
 	})
 
-	if err != nill{
-		log.Info("Connection failed")
-		log.fatal(err)
-
-	}else{
-		log.info("Connection Established")
+	if err != nil {
+		log.Fatal("Error al conectar a la base de datos:", err)
+	} else {
+		log.Println("Conexión a la base de datos exitosa")
 	}
 
-	actividadClient.Db= dba
-	usuarioClient.Db=   dba
-	inscripcionClient=  dba
-	categoriaclient=    dba
-	tipo_usuarioClient= dba
+	// Inyección de dependencias
+	actividadClient.Db = dba
+	usuarioClient.Db = dba
+	inscripcionClient.Db = dba
+
+	actividadService.SetDB(dba)
+	usuarioController.SetDB(dba)
 }
-func StartDbEngine(){
-	dba.AutoMigrate(&domain.actividad{})
-	dba.AutoMigrate(&domain.inscripcion{})
-	dba.AutoMigrate(&domain.usuario{})
-	log.Info("Finishing Migration Database Tables")
-	prePreInsertData()
+
+func StartDbEngine() {
+	err := dba.AutoMigrate(&domain.Actividad{}, &domain.Inscripcion{}, &domain.Usuario{})
+	if err != nil {
+		log.Fatal("Error al migrar tablas:", err)
+	}
+	log.Println("Migración de tablas completada")
 }
