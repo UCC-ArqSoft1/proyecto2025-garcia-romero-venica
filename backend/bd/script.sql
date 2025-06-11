@@ -1,4 +1,27 @@
+-- MySQL dump 10.13  Distrib 8.0.36, for Linux (x86_64)
+--
+-- Host: 127.0.0.1    Database: gimnasio
+-- ------------------------------------------------------
+-- Server version	8.0.42-0ubuntu0.24.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `actividades`
+--
+
 DROP TABLE IF EXISTS `actividades`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `actividades` (
   `id_actividades` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
@@ -11,8 +34,24 @@ CREATE TABLE `actividades` (
   `disponibles` int DEFAULT NULL,
   PRIMARY KEY (`id_actividades`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `actividades`
+--
+
+LOCK TABLES `actividades` WRITE;
+/*!40000 ALTER TABLE `actividades` DISABLE KEYS */;
+/*!40000 ALTER TABLE `actividades` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inscripciones`
+--
 
 DROP TABLE IF EXISTS `inscripciones`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `inscripciones` (
   `id_inscripciones` int NOT NULL AUTO_INCREMENT,
   `usuarios_id` int DEFAULT NULL,
@@ -24,21 +63,51 @@ CREATE TABLE `inscripciones` (
   CONSTRAINT `fk_actividad_id` FOREIGN KEY (`actividades_id`) REFERENCES `actividades` (`id_actividades`),
   CONSTRAINT `fk_usuario_id` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id_usuarios`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inscripciones`
+--
+
+LOCK TABLES `inscripciones` WRITE;
+/*!40000 ALTER TABLE `inscripciones` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inscripciones` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuarios`
+--
 
 DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
   `id_usuarios` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
-  `contraseña_hash` varchar(100) DEFAULT NULL,
+  `contraseña_hash` varchar(45) DEFAULT NULL,
   `tipo_usuarios_id` tinyint DEFAULT NULL,
   PRIMARY KEY (`id_usuarios`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuarios`
+--
 
 LOCK TABLES `usuarios` WRITE;
-INSERT INTO `usuarios` (nombre, email, contraseña_hash, tipo_usuarios_id)
-VALUES 
-('Andrew', 'andrew@gmail.com', '$2a$10$YFzqg4YYYmAYIW5s7SC88ejRpD4cPhXvkGnF15cw5sKBmHIcBBEna', 1),
-('Pablo Socio', 'pablo.socio@example.com', '$2a$10$xHv8X4OBqTj2tvFJ/Gryv.wv3kgnSYTOSqZg48RQk6HiNYU8ITqzu', 1),
-('Pablo Admin', 'admin@example.com', '$2a$10$Wb6ID44Eaz9iVxhKYMkRkOaOYr7asVabY/Bz7vnELIRtFbV5eIVTO', 2);
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'andrew','andrew@gmail.com','14535',1);
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-06-05 19:11:11
