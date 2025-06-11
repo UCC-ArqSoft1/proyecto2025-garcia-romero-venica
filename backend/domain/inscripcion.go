@@ -1,15 +1,14 @@
 package domain
+
 import "time"
+
 type Inscripcion struct {
-	ID           int        `gorm:"primaryKey"`
-	UsuarioID    int        `gorm:"foreignKey:UsuarioID"`
-	Usuario      Usuario    
-	Fecha        time.Time 	`gorm:"type:date"`
-	ActividadID  int        `gorm:"foreignKey:ActividadID"`
-	Actividad    Actividad  
+	ID          int       `gorm:"column:id_inscripciones;primaryKey;autoIncrement"`
+	UsuarioID   int       `gorm:"column:usuarios_id"`
+	Usuario     Usuario   `gorm:"foreignKey:UsuarioID"`
+	Fecha       time.Time `gorm:"column:fecha_inscripcion"`
+	ActividadID int       `gorm:"column:actividades_id"`
+	Actividad   Actividad `gorm:"foreignKey:ActividadID"`
 }
 
-
-type Inscripciones[] Inscripcion
-
-
+type Inscripciones []Inscripcion
