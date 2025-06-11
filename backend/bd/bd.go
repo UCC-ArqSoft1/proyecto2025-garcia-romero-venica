@@ -1,52 +1,47 @@
 package db
 
 import (
-	"log"
+	actividadClient "backend/clients/actividad"
+	inscripcionClient "backend/clients/inscripcion"
+	usuarioClient "backend/clients/usuario"
+	"backend/domain"
 
-	actividadClient "proyecto2025-garcia-romero-venica/clients/actividad"
-	usuarioClient "proyecto2025-garcia-romero-venica/clients/usuario"
-	inscripcionClient "proyecto2025-garcia-romero-venica/clients/inscripcion"
-
-	actividadService "proyecto2025-garcia-romero-venica/api/backend/services/actividad_service"
-	usuarioController "proyecto2025-garcia-romero-venica/api/backend/controllers/usuario"
-
-	"proyecto2025-garcia-romero-venica/api/backend/domain"
-
+	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
 
 var (
-	dba *gorm.DB
+	DB  *gorm.DB
 	err error
 )
 
-func init() {
-	dsn := "root:1234@tcp(127.0.0.1:3306)/gimnasio?parseTime=true"
-	dba, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+func Init() {
+	// Configuración para MySQL (según tu dump)
+	dsn := "root:Belgrano11@tcp(localhost:3306)/gimnasio?parseTime=true"
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
 
 	if err != nil {
-		log.Fatal("Error al conectar a la base de datos:", err)
+		log.Error("Connection to database failed")
+		log.Fatal(err)
 	} else {
-		log.Println("Conexión a la base de datos exitosa")
+		log.Info("Database connection established")
 	}
 
-	// Inyección de dependencias
-	actividadClient.Db = dba
-	usuarioClient.Db = dba
-	inscripcionClient.Db = dba
+	// Asignación a clients
+	actividadClient.DB = DB
+	usuarioClient.DB = DB
+	inscripcionClient.DB = DB
 
-	actividadService.SetDB(dba)
-	usuarioController.SetDB(dba)
 }
 
 func StartDbEngine() {
-	err := dba.AutoMigrate(&domain.Actividad{}, &domain.Inscripcion{}, &domain.Usuario{})
-	if err != nil {
-		log.Fatal("Error al migrar tablas:", err)
-	}
-	log.Println("Migración de tablas completada")
+	DB.AutoMigrate(&domain.Actividad{})
+	DB.AutoMigrate(&domain.Usuario{})
+	DB.AutoMigrate(&domain.Inscripcion{})
+
+	log.Info("Finishing Migration Database Tables")
 }
