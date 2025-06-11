@@ -1,11 +1,3 @@
--- Usar la base de datos gimnasio
-USE gimnasio;
-
--- Borrar tablas si ya existen
-DROP TABLE IF EXISTS inscripciones;
-DROP TABLE IF EXISTS actividades;
-DROP TABLE IF EXISTS usuarios;
-
 -- Crear tabla usuarios
 CREATE TABLE usuarios (
   id_usuarios INT NOT NULL AUTO_INCREMENT,
@@ -34,13 +26,15 @@ CREATE TABLE actividades (
 CREATE TABLE inscripciones (
   id_inscripciones INT NOT NULL AUTO_INCREMENT,
   usuarios_id INT,
-  fecha_inscripcion DATE,
+  fecha_inscripcion DATETIME,
   actividades_id INT,
   PRIMARY KEY (id_inscripciones),
   FOREIGN KEY (usuarios_id) REFERENCES usuarios(id_usuarios),
   FOREIGN KEY (actividades_id) REFERENCES actividades(id_actividades)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Insertar usuario de prueba (admin)
+-- Insertar usuarios de prueba
 INSERT INTO usuarios (nombre, email, password, tipo_usuarios_id)
-VALUES ('admin', 'admin@gmail.com', '14535', 1);
+VALUES 
+('admin', 'admin@gmail.com', '14535', 1),
+('socio', 'socio@gmail.com', 'socio123', 0);
