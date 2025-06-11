@@ -1,3 +1,4 @@
+// LoginPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
@@ -11,34 +12,28 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Simulación temporal
-    if (username === "admin" && password === "admin123") {
-      navigate("/admin");
-    } else if (username === "socio" && password === "socio123") {
-      navigate("/socio");
-    } else {
-      setError("Usuario o contraseña incorrectos.");
-    }
-
-    // Conexión real (descomentar cuando esté listo el backend)
-    /*
     try {
-      const res = await fetch('http://TU_BACKEND/login', {
+      const res = await fetch('http://localhost:8080/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
       });
       const data = await res.json();
-      if (res.ok) {
+
+      if (res.ok && data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("rol", data.rol);
+        localStorage.setItem("userID", data.userID);
+
         if (data.rol === 'admin') navigate('/admin');
         else if (data.rol === 'socio') navigate('/socio');
+        else setError("Rol desconocido");
       } else {
-        setError(data.message || 'Error de autenticación');
+        setError(data.error || 'Credenciales inválidas');
       }
     } catch (err) {
       setError('Error del servidor');
     }
-    */
   };
 
   return (
