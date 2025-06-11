@@ -1,32 +1,28 @@
 package app
 
+
 import (
-	"github.com/gin-gonic/gin"
-
-	// Controladores
-	"backend/controllers/actividad"
-	"backend/controllers/usuario"
-	"backend/controllers/inscripcion"
-
-	// Middleware
-	"backend/middleware"
+	actividadController "backend/controller/actividad"
+	inscripcionController "backend/controller/inscripcion"
+	log "github.com/sirupsen/logrus"
 )
 
-func MapUrls(router *gin.Engine) {
-	api := router.Group("/api")
 
-	// Rutas para actividades deportivas
-	api.GET("/actividades", actividad.GetAll)
-	api.GET("/actividades/:id", actividad.GetByID)
-	api.POST("/actividades", middleware.AuthMiddleware("admin"), actividad.Create)
+func mapsUrls(){
 
-	// Rutas para inscripciones
-	api.GET("/inscripciones", middleware.AuthMiddleware("admin"), inscripcion.GetAll)
-	api.POST("/inscripciones", middleware.AuthMiddleware("socio"), inscripcion.Create)
-	api.GET("/inscripciones/usuario", middleware.AuthMiddleware("socio"), inscripcion.GetByUsuarioID)
 
-	// Rutas para usuarios
-	api.POST("/login", usuario.Login)
-	api.GET("/usuarios", usuario.GetAll)
-	api.POST("/usuarios", usuario.Create)
+	log.Info("Starting mappings configurations")
+	
+	//son acciones que tienen que ver solamente con actividades
+	router.GET("/actividades",actividadController.GetAll)
+	router.GET("/actividades/:id",actividadController.GetActividadByID)
+	router.POST("/actividades", actividadController.Create)
+ 	router.PUT("/actividades/:id", actividadController.Update)
+	router.DELETE("/actividades/:id", actividadController.Delete)
+	
+	//acciones que tienen que ver con inscripciones 
+	router.POST("/inscripciones",inscripcionController.CreateInscripcion)
+	router.GET("/inscripciones/:usuarioID",inscripcionController.GetUserInscripcion)
+
+
 }
