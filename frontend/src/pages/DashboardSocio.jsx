@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+// DashboardSocio.jsx
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./DashboardSocio.css";
 
-const actividadesFake = [
-  { id: 1, titulo: "Fútbol", horario: "18:00 a 20:00", profesor: "Carlos Pérez", descripcion: "Partido amistoso de fútbol 5" },
-  { id: 2, titulo: "Yoga", horario: "09:00 a 11:00", profesor: "Laura Gómez", descripcion: "Clase de yoga para principiantes" },
-  { id: 3, titulo: "Crossfit", horario: "20:00 a 22:00", profesor: "Martín Díaz", descripcion: "Entrenamiento de alta intensidad" },
-];
-
 function DashboardSocio() {
   const [search, setSearch] = useState("");
-  const [actividades] = useState(actividadesFake);
+  const [actividades, setActividades] = useState([]);
   const [inscripciones, setInscripciones] = useState([]);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    fetch("http://localhost:8080/actividades")
+      .then(res => res.json())
+      .then(data => setActividades(data))
+      .catch(err => console.error("Error al cargar actividades", err));
+
+    fetch("http://localhost:8080/api/inscripciones/usuario", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => res.json())
+      .then(data => setInscripciones(data))
+      .catch(err => console.error("Error al cargar inscripciones", err));
+  }, [token]);
 
   const actividadesFiltradas = actividades.filter((act) =>
     act.titulo.toLowerCase().includes(search.toLowerCase()) ||
@@ -22,17 +32,23 @@ function DashboardSocio() {
   );
 
   const handleInscribirse = (actividad) => {
-    if (!inscripciones.find((a) => a.id === actividad.id)) {
-      setInscripciones([...inscripciones, actividad]);
-      Swal.fire("¡Inscripción exitosa!", `Te has inscrito a: ${actividad.titulo}`, "success");
-    } else {
-      Swal.fire("Ya estás inscrito", `Ya estás inscrito a: ${actividad.titulo}`, "info");
-    }
-  };
-
-  const handleDesinscribirse = (id) => {
-    setInscripciones(inscripciones.filter((a) => a.id !== id));
-    Swal.fire("Cancelado", "Te has desinscripto de la actividad", "info");
+    fetch("http://localhost:8080/api/inscripciones", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ actividad_id: actividad.id })
+    })
+      .then(res => res.json())
+      .then(data => {
+        Swal.fire("¡Inscripción exitosa!", data.mensaje, "success");
+        setInscripciones(prev => [...prev, actividad]);
+      })
+      .catch(err => {
+        Swal.fire("Error", "No se pudo realizar la inscripción", "error");
+        console.error(err);
+      });
   };
 
   const handleVerDetalle = (id) => {
@@ -82,9 +98,6 @@ function DashboardSocio() {
                 <li key={act.id} className="socio-item inscrito">
                   <strong>{act.titulo}</strong> - {act.horario}<br />
                   <small>Profesor: {act.profesor}</small>
-                  <div className="socio-botones">
-                    <button onClick={() => handleDesinscribirse(act.id)} className="socio-btn cancelar">Desinscribirse</button>
-                  </div>
                 </li>
               ))}
             </ul>
