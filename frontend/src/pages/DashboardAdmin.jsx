@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./DashboardAdmin.css";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function DashboardAdmin() {
   const [nombre, setNombre] = useState("");
@@ -13,6 +14,7 @@ function DashboardAdmin() {
   const [idEditar, setIdEditar] = useState(null);
 
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const cargarActividades = () => {
     fetch("http://localhost:8080/actividades")
@@ -121,6 +123,11 @@ function DashboardAdmin() {
 
   return (
     <main className="admin-container">
+      {/* Botón volver */}
+      <button className="volver-btn" onClick={() => navigate(-1)}>
+        ← Volver
+      </button>
+
       <h1 className="admin-titulo">
         {modoEdicion ? "Editar Actividad" : "Agregar Actividad"}
       </h1>
