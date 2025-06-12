@@ -11,4 +11,10 @@ type Inscripcion struct {
 	Actividad   Actividad `gorm:"foreignKey:ActividadID"`
 }
 
+
+func (Inscripcion) TableName() string {
+	return "inscripciones"
+}
+
+
 type Inscripciones []Inscripcion
