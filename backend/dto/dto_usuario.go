@@ -1,4 +1,3 @@
-// dto_usuario.go
 package dto
 
 type UsuarioDto struct {
