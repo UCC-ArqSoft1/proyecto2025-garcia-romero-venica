@@ -12,4 +12,7 @@ type Actividad struct {
 	Categoria   string `gorm:"type:varchar(100)" json:"categoria"`
 }
 
-type Actividades []Actividad
+// Forzar el nombre correcto de la tabla
+func (Actividad) TableName() string {
+	return "actividades"
+}
