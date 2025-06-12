@@ -11,4 +11,7 @@ type Inscripcion struct {
 	Actividad   Actividad `gorm:"foreignKey:ActividadID"`
 }
 
-type Inscripciones []Inscripcion
+// Esto fuerza a GORM a usar la tabla "inscripciones"
+func (Inscripcion) TableName() string {
+	return "inscripciones"
+}
