@@ -24,7 +24,8 @@ func mapsUrls() {
 	// Actividades protegidas (ej: creación solo para admin)
 	api.POST("/actividades", actividadController.Create)
 	api.PUT("/actividades/:id", actividadController.Update)
-	api.DELETE("/actividades/:id", actividadController.Delete)
+	api.DELETE("/inscripciones/:id", inscripcionController.DeleteInscripcion)
+
 
 	// Inscripciones protegidas
 	api.POST("/inscripciones", inscripcionController.CreateInscripcion)
