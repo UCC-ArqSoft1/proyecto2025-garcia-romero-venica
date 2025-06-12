@@ -1,23 +1,22 @@
 package actividad
-import( 
+
+import (
 	"backend/domain"
-	"gorm.io/gorm"
+
 	log "github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
-
-
-
-//aqui deberiamos poder obtener todas las actividades con estado 1 
+// aqui deberiamos poder obtener todas las actividades con estado 1
 func GetActividades() []domain.Actividad {
 	var actividades []domain.Actividad
 	DB.Where("estado = ?", true).Find(&actividades)
 	return actividades
 }
 
-//aqui obtenemos las actividades por medio de un ID y se muestran las actividades con estado 1 
+// aqui obtenemos las actividades por medio de un ID y se muestran las actividades con estado 1
 func GetActividadById(id int) (domain.Actividad, error) {
 	var actividad domain.Actividad
 
@@ -35,46 +34,45 @@ func GetActividadById(id int) (domain.Actividad, error) {
 	return actividad, nil
 }
 
-//se inserta actividad
+// se inserta actividad
 func InsertActividad(actividad domain.Actividad) domain.Actividad {
-    result := DB.Create(&actividad)
-    if result.Error != nil {
-        log.Error(result.Error)
-    }
-    log.Debug("Actividad creada con ID:", actividad.ID)
-    return actividad
+	result := DB.Create(&actividad)
+	if result.Error != nil {
+		log.Error(result.Error)
+	}
+	log.Debug("Actividad creada con ID:", actividad.ID)
+	return actividad
 }
-//se borra una actividad por medio de un ID, es un borrado logico
+
+// se borra una actividad por medio de un ID, es un borrado logico
 func DeleteActividad(id int) (domain.Actividad, error) {
-    var actividad domain.Actividad
-    if err := DB.First(&actividad, id).Error; err != nil {
-        return domain.Actividad{}, err
-    }
+	var actividad domain.Actividad
+	if err := DB.First(&actividad, id).Error; err != nil {
+		return domain.Actividad{}, err
+	}
 
-    if err := DB.Model(&actividad).Update("estado", 0).Error; err != nil {
-        return domain.Actividad{}, err
-    }
+	if err := DB.Model(&actividad).Update("estado", 0).Error; err != nil {
+		return domain.Actividad{}, err
+	}
 
-    log.Info("Actividad desactivada, ID:", id)
-    return actividad, nil
+	log.Info("Actividad desactivada, ID:", id)
+	return actividad, nil
 }
 
-
-
-//se obtienen las actividades y podriamos utilizar esto despues de editar una actividad
+// se obtienen las actividades y podriamos utilizar esto despues de editar una actividad
 func ActualizarActividad(id int, actividad domain.Actividad) (domain.Actividad, error) {
-    result := DB.Model(&domain.Actividad{}).Where("id= ?", id).Updates(actividad)
-    if result.Error != nil {
-        log.Error("Error al actualizar actividad:", result.Error)
-        return domain.Actividad{}, result.Error
-    }
-    
-    // Obtener la actividad actualizada para devolverla
-    var updatedActividad domain.Actividad
-    if err := DB.First(&updatedActividad, id).Error; err != nil {
-        return domain.Actividad{}, err
-    }
-    
-    log.Debug("Actividad actualizada:", updatedActividad)
-    return updatedActividad, nil
+	result := DB.Model(&domain.Actividad{}).Where("id= ?", id).Updates(actividad)
+	if result.Error != nil {
+		log.Error("Error al actualizar actividad:", result.Error)
+		return domain.Actividad{}, result.Error
+	}
+
+	// Obtener la actividad actualizada para devolverla
+	var updatedActividad domain.Actividad
+	if err := DB.First(&updatedActividad, id).Error; err != nil {
+		return domain.Actividad{}, err
+	}
+
+	log.Debug("Actividad actualizada:", updatedActividad)
+	return updatedActividad, nil
 }
