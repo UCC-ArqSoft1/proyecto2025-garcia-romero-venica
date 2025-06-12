@@ -18,7 +18,7 @@ var (
 )
 
 func Init() {
-	// Configuración para MySQL (según tu dump)
+	// Configuración para MySQL
 	dsn := "root:Belgrano11@tcp(localhost:3306)/gimnasio?parseTime=true"
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
