@@ -10,7 +10,7 @@ function ActividadDetalle() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/actividades/${id}`, {
+    fetch(`http://localhost:8080/actividades/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then((res) => res.json())
@@ -21,44 +21,35 @@ function ActividadDetalle() {
       });
   }, [id, token]);
 
-  const handleInscribirse = () => {
-    fetch("http://localhost:8080/inscripciones", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({ actividad_id: actividad.id })
-    })
-      .then(res => res.json())
-      .then(data => {
-        Swal.fire("¡Inscripción exitosa!", data.mensaje, "success");
-      })
-      .catch(err => {
-        Swal.fire("Error", "No se pudo realizar la inscripción", "error");
-        console.error(err);
-      });
-  };
-
   if (!actividad) {
-    return <p>Cargando actividad...</p>;
+    return <p className="detalle-container">Cargando actividad...</p>;
   }
 
-  return (
-    <div className="actividad-detalle">
-      <button onClick={() => navigate(-1)} className="volver-btn">← Volver</button>
-      <h2>{actividad.titulo}</h2>
-      <img src={actividad.foto || "/default.jpg"} alt={actividad.titulo} className="actividad-img" />
-      <p><strong>Descripción:</strong> {actividad.descripcion}</p>
-      <p><strong>Profesor:</strong> {actividad.profesor}</p>
-      <p><strong>Horario:</strong> {actividad.horario}</p>
-      <p><strong>Duración:</strong> {actividad.duracion}</p>
-      <p><strong>Cupo:</strong> {actividad.cupo}</p>
+  const imagenes = {
+    futbol: "https://www.comunidad.madrid/sites/default/files/styles/image_style_16_9/public/img/colectivos/shutterstock_614527325.jpg?itok=znJHrFRa",
+    yoga: "https://nutritionsource.hsph.harvard.edu/wp-content/uploads/2021/11/pexels-yan-krukov-8436601-copy-scaled.jpg",
+    boxeo: "https://www.tagoya.com/blog/wp-content/uploads/2023/05/mejores-entrenamiento-saco-boxeo.jpg",
+    tenis: "https://s3.abcstatics.com/media/bienestar/2019/08/02/tenis-abecedario-kgNF--1248x698@abc.jpg",
+    natacion: "https://www.superprof.com.ar/blog/wp-content/uploads/2024/12/entrenamiento-natacion.jpg"
+  };
 
-      <button onClick={handleInscribirse} className="btn-inscribirse">
-        Inscribirse
-      </button>
-    </div>
+  const imagen = imagenes[actividad.nombre.toLowerCase()] || "https://via.placeholder.com/800x400";
+
+  const capitalizar = (texto) => texto.charAt(0).toUpperCase() + texto.slice(1);
+
+  return (
+    <main className="detalle-container">
+      <button onClick={() => navigate(-1)} className="volver-btn">← Volver</button>
+      <h1 className="detalle-titulo">{capitalizar(actividad.nombre)}</h1>
+      <img src={imagen} alt={actividad.nombre} className="detalle-imagen" />
+      <div className="detalle-info">
+        <p><strong>Descripción:</strong> {actividad.descripcion}</p>
+        <p><strong>Profesor:</strong> {actividad.profesor}</p>
+        <p><strong>Horario:</strong> {actividad.horario}</p>
+        <p><strong>Cupo total:</strong> {actividad.cupo}</p>
+        <p><strong>Disponibles:</strong> {actividad.disponible}</p>
+      </div>
+    </main>
   );
 }
 

@@ -42,6 +42,19 @@ function DashboardSocio() {
   );
 
   const handleInscribirse = (actividad) => {
+    const yaInscrito = inscripciones.some(
+      insc => insc.actividad_id === actividad.id || insc.id === actividad.id
+    );
+
+    if (yaInscrito) {
+      Swal.fire(
+        "Ya estás inscrito",
+        "No puedes inscribirte más de una vez a la misma actividad.",
+        "warning"
+      );
+      return;
+    }
+
     fetch("http://localhost:8080/inscripciones", {
       method: "POST",
       headers: {
