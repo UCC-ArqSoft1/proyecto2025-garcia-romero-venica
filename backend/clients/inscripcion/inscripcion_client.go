@@ -59,6 +59,21 @@ func CreateInscripcion(inscripcion domain.Inscripcion) (domain.Inscripcion, erro
     } else if err != gorm.ErrRecordNotFound {
         return domain.Inscripcion{}, err
     }
+      var actividad domain.Actividad
+    if err := DB.First(&actividad, inscripcion.ActividadID).Error; err != nil {
+        return domain.Inscripcion{}, fmt.Errorf("actividad no encontrada")
+    }
+    
+    if actividad.Disponible <= 0 {
+        return domain.Inscripcion{}, fmt.Errorf("no hay cupo disponible para esta actividad")
+    }
+    
+    // Disminuir el disponible (actualización directa en la base de datos)
+    if err := DB.Model(&domain.Actividad{}).
+        Where("id = ?", inscripcion.ActividadID).
+        Update("disponible", gorm.Expr("disponible - 1")).Error; err != nil {
+        return domain.Inscripcion{}, fmt.Errorf("error actualizando cupo disponible")
+    }
     
     result := DB.Create(&inscripcion)
     if result.Error != nil {

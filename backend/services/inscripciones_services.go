@@ -50,11 +50,12 @@ func (s *inscripcionService) CreateInscripcion(inscripcionDto dto.InscripcionDto
 	// Verificar si la actividad existe
 	actividad, err := actividadClient.GetActividadById(inscripcionDto.ActividadID)
 	if err != nil {
-		return dto.InscripcionDto{}, errors.New("error buscando actividad: " + err.Error())
+    return dto.InscripcionDto{}, errors.New("error buscando actividad: " + err.Error())
 	}
 	if actividad.ID == 0 {
-		return dto.InscripcionDto{}, errors.New("actividad no encontrada")
+    return dto.InscripcionDto{}, errors.New("actividad no encontrada")
 	}
+
 
 	// Verificar si el usuario existe
 	usuario, err := usuarioClient.GetUserById(inscripcionDto.UsuarioID)
