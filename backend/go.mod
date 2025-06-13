@@ -7,6 +7,7 @@ toolchain go1.23.10
 require (
 	github.com/gin-contrib/cors v1.7.5
 	github.com/gin-gonic/gin v1.10.1
+	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/sirupsen/logrus v1.9.3
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/gorm v1.30.0

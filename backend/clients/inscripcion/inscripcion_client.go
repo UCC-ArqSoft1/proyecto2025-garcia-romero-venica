@@ -20,6 +20,15 @@ func GetInscripcionesCountByActividad(actividadID int) (int64, error) {
     }
     return count, nil
 }
+func DeleteInscripcion(id int) error {
+	result := DB.Delete(&domain.Inscripcion{}, id)
+	if result.Error != nil {
+		log.Error("Error al eliminar inscripción: ", result.Error)
+		return result.Error
+	}
+	log.Info("Inscripción eliminada con ID:", id)
+	return nil
+}
 
 
 func GetUserInscriptions(userID int) ([]domain.Inscripcion, error) {

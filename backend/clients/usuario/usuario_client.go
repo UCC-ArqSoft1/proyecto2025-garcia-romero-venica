@@ -1,30 +1,31 @@
 package usuario
 
-import(
+import (
 	"backend/domain"
-	"gorm.io/gorm"
-	log "github.com/sirupsen/logrus"
-)
+	"crypto/sha256"
+	"fmt"
 
+	log "github.com/sirupsen/logrus"
+	"gorm.io/gorm"
+)
 
 var DB *gorm.DB
 
 func GetUserById(id int) (domain.Usuario, error) {
 	var usuario domain.Usuario
-
 	err := DB.First(&usuario, id).Error
 	if err != nil {
 		return domain.Usuario{}, err
 	}
-
 	return usuario, nil
 }
 
 func VerifyCredentials(email, password string) (domain.Usuario, bool) {
 	var usuario domain.Usuario
+	hash := sha256.Sum256([]byte(password))
+	passwordHash := fmt.Sprintf("%x", hash)
 
-	result := DB.Where("email = ? AND password = ?", email, password).First(&usuario)
-
+	result := DB.Where("email = ? AND password = ?", email, passwordHash).First(&usuario)
 	if result.Error != nil {
 		log.Warn("Credenciales inválidas o usuario no encontrado.")
 		return domain.Usuario{}, false
@@ -33,6 +34,7 @@ func VerifyCredentials(email, password string) (domain.Usuario, bool) {
 	log.Debug("Usuario autenticado: ", usuario.Email)
 	return usuario, true
 }
+
 
 /*
 func VerifyCredentials(email, password string) (domain.Usuario, bool) {

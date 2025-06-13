@@ -43,3 +43,19 @@ func CreateInscripcion(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusCreated, created)
 }
+func DeleteInscripcion(ctx *gin.Context) {
+	idStr := ctx.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "ID inválido"})
+		return
+	}
+
+	err = services.InscripcionService.DeleteInscripcion(id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"mensaje": "Inscripción eliminada correctamente"})
+}

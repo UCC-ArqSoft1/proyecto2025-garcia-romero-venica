@@ -15,6 +15,7 @@ type inscripcionService struct{}
 type inscripcionServiceInterface interface {
 	CreateInscripcion(inscripcionDto dto.InscripcionDto) (dto.InscripcionDto, error)
 	GetInscripcionesByUserId(userId int) (dto.InscripcionesDto, error)
+	DeleteInscripcion(id int ) error 
 }
 
 var (
@@ -107,4 +108,7 @@ func (s *inscripcionService) CreateInscripcion(inscripcionDto dto.InscripcionDto
 	}
 
 	return response, nil
+}
+func (s *inscripcionService) DeleteInscripcion(id int) error {
+	return inscripcionClient.DeleteInscripcion(id)
 }
