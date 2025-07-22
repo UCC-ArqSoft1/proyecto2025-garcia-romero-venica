@@ -1,0 +1,17 @@
+docker run -d --name mysql56-container -p 3307:3306 -e MYSQL_ROOT_PASSWORD=password mysql:5.6     #Créer le conteneur
+mysql -h 127.0.0.1 -P 3307 -u root -p							          #Connexion à mysql dans le conteneur (mdp : password)
+CREATE DATABASE gimnasio;
+USE gimnasio;											  #Run le backend pour qu'il puisse créer les tables (NE PAS CREER LES TABLES SOI-MEME)
+
+
+
+INSERT INTO usuarios (nombre, email, password, tipo_usuarios_id)				  #Remplir la table dans usuarios.		
+VALUES
+  ('julian', 'julian@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'admin'),
+  ('pablo',  'pablo@gmail.com',  '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'socio'),
+  ('andrew', 'andrew@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'socio'),
+  ('salva',  'salva@gmail.com',  '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'socio');
+
+
+
+
